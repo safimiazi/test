@@ -4,9 +4,6 @@ const hey = () {
 const mohi = () {
     return "mohibulla";
 }
-function mohibulla (){
-    return "mohibulla miazi"
-}
 
 
 

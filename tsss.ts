@@ -7,6 +7,7 @@ function mohs(){
     
 }
 function sayHey (){
-    return "mohibulla"
+    return "mohibulla miazi"
+
 }
 

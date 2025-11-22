@@ -1,7 +1,7 @@
-function test() {
+function tsest() {
     return "Hello Taj Auto Push";
 }
 
-function shorove () {
+function shosrove () {
     return "say hello faltu , butki, protarok"
 }

@@ -4,7 +4,9 @@ const hey = () {
 function mohs(){
     return "mohi"
 
-    sdf
+    
 }
-
+function sayHey (){
+    return "mohibulla"
+}
 

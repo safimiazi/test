@@ -334,24 +334,6 @@ export class WebviewPanel {
                     </div>
                 </div>
 
-                <!-- Footer -->
-                <footer class="footer">
-                    <div class="footer-content">
-                        <div class="footer-text">
-                            <span class="footer-title">Auto Push</span>
-                            <span class="footer-subtitle">Made with ❤️ by Mohebulla Miazi Shafi</span>
-                        </div>
-                        <div class="footer-links">
-                            <a href="https://www.linkedin.com/in/shafimiazi" target="_blank" class="footer-link">
-                                <span class="link-icon">💼</span> LinkedIn
-                            </a>
-                            <a href="https://www.facebook.com/shafimiazi1" target="_blank" class="footer-link">
-                                <span class="link-icon">👥</span> Facebook
-                            </a>
-                        </div>
-                    </div>
-                </footer>
-            </div>
 
             <script src="${scriptUri}"></script>
         </body>

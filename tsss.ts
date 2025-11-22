@@ -264,9 +264,7 @@ export class WebviewPanel {
                                 <span class="btn-desc">Smart commit with AI message</span>
                             </span>
  <span class="btn-badge" style="
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        color: white;
-        padding: 4px 8px;
+    
         border-radius: 12px;
         font-size: 10px;
         font-weight: 700;

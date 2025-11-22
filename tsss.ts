@@ -263,8 +263,21 @@ export class WebviewPanel {
                                 <span class="btn-title">AI Commit & Push</span>
                                 <span class="btn-desc">Smart commit with AI message</span>
                             </span>
-                            <span class="btn-badge">RECOMMENDED</span>
-                        </button>
+ <span class="btn-badge" style="
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        animation: pulse 2s infinite;
+        margin-left: 8px;
+        white-space: nowrap;
+    ">RECOMMENDED</span>                        </button>
 
                         <button id="quickCommit" class="action-btn quick-commit">
                             <span class="btn-icon">⚡</span>

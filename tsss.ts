@@ -3,6 +3,8 @@ const hey = () {
 }
 function mohs(){
     return "mohi"
+
+    j
 }
 
 

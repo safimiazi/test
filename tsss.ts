@@ -4,4 +4,3 @@ const hey = () {
 const mohi = () {
     return "mohibulla";
 }
-dfsdf

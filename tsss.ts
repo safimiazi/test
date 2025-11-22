@@ -7,3 +7,8 @@ const mohi = () {
 function mohibulla (){
     return "mohibulla miazi"
 }
+
+
+function autoPush(){
+    return "hey"
+}

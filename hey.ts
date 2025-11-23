@@ -1,1 +1,3 @@
-hi my name is mohibullajhjh shafi he allah ami tomay
+funtion mohibula(){
+    console.log("Hello, Mohibulla");
+}

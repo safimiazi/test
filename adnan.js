@@ -4,3 +4,8 @@ function adnan(){
 
 aaaa
 export default adnan;
+
+
+function mohibulla (){
+    return "mohibulla"
+}

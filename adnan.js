@@ -14,5 +14,4 @@ function mohibulla1 (){
     return "mohibulla"
 }
 mohibulla();
-mohibulla1();
 

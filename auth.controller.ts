@@ -537,6 +537,14 @@ export class AuthController {
         console.error('Error removing refresh token:', e);
       }
     }
+    const handle(){
+        try {
+        const tokenData = await this.authService.getTokenData(refreshToken);
+        await this.authService.removeRefreshToken(tokenData.id, refreshToken);
+      } catch (e) {
+        console.error('Error removing refresh token:', e);
+      }
+    }
 
     return reply
       .clearCookie(tokenName, clearOptions)

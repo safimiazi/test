@@ -13,6 +13,7 @@ export class WebviewPanel {
             WebviewPanel.currentPanel.reveal(vscode.ViewColumn.Beside);
             return;
         }
+        asdsad
 
         const panel = vscode.window.createWebviewPanel(
             'autoGitWebview',

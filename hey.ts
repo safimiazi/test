@@ -1,1 +1,3 @@
-jhjhgh
+function getValue (){
+    return 43;
+}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI Podcast Player - Test</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 30px; background: #1a1a1a; color: #fff; }
+    .container { max-width: 600px; margin: auto; background: #2d2d2d; padding: 30px; border-radius: 15px; }
+    input, select, button { padding: 12px; margin: 10px 0; width: 100%; border-radius: 8px; border: none; font-size: 16px; }
+    button { background: #00d4ff; color: black; font-weight: bold; cursor: pointer; }
+    button:hover { background: #00ffaa; }
+    button:disabled { background: #555; cursor: not-allowed; }
+    .status { margin-top: 20px; font-size: 18px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>AI Podcast Player</h1>
+    
+    <label>Book ID (from URL)</label>
+    <input type="text" id="bookId" value="6667d9458effc18ee419c5f9" placeholder="Enter bookId">
+
+    <label>Host 1 (Shafi) - Voice</label>
+    <select id="voice1">
+      <option value="66f1a2b3c4d5e6f7g8h9i0j1">Shafi - Male Neural (AWS)</option>
+      <option value="66f1a2b3c4d5e6f7g8h9i0j2">Adnan - Deep Voice (GCP)</option>
+      <option value="66f1a2b3c4d5e6f7g8h9i0j3">Rafi - Friendly (AWS)</option>
+    </select>
+
+    <label>Host 2 (Adnan) - Voice</label>
+    <select id="voice2">
+      <option value="66f1a2b3c4d5e6f7g8h9i0j4">Adnan - Calm (GCP)</option>
+      <option value="66f1a2b3c4d5e6f7g8h9i0j5">Rafi - Energetic (AWS)</option>
+      <option value="66f1a2b3c4d5e6f7g8h9i0j6">Female Voice - Neural</option>
+    </select>
+
+    <label>Tone</label>
+    <select id="tone">
+      <option value="excited">Excited</option>
+      <option value="friendly">Friendly</option>
+      <option value="casual">Casual</option>
+      <option value="educational">Educational</option>
+    </select>
+
+    <button id="playBtn">Play Podcast</button>
+    <div class="status" id="status">Ready</div>
+  </div>
+
+  <script>
+    const playBtn = document.getElementById('playBtn');
+    const status = document.getElementById('status');
+
+    playBtn.onclick = async () => {
+      const bookId = document.getElementById('bookId').value.trim();
+      if (!bookId) return alert("Book ID দাও!");
+
+      status.textContent = "Starting podcast...";
+      playBtn.disabled = true;
+
+      const payload = {
+        voices: [
+          
+          { character: "Shafi", voiceId: "ar-XA-Chirp3-HD-Iapetus" },
+          { character: "Adnan", voiceId: "ar-XA-Standard-D" }
+        ],
+        tone: document.getElementById('tone').value
+      };
+
+      try {
+        const response = await fetch(`http://localhost:3001/api/podcast/${bookId}/stream-podcast`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error("Failed: " + response.status);
+
+        const audio = new Audio(URL.createObjectURL(await response.blob()));
+        audio.play();
+
+        status.textContent = "Playing... (চলছে)";
+        
+        audio.onended = () => {
+          status.textContent = "Finished!";
+          playBtn.disabled = false;
+        };
+
+        audio.onerror = () => {
+          status.textContent = "Error playing audio";
+          playBtn.disabled = false;
+        };
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Error: " + err.message;
+        playBtn.disabled = false;
+      }
+    };
+  </script>
+</body>
+</html>

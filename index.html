@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="${styleUri}" rel="stylesheet">
+    <title>Auto Push - AI Powered Git Automation</title>
+</head>
+ <script>
+     <script>
+            function getGroqKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://console.groq.com/keys' });
+                }
+            }
+
+            function getOpenRouterKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://openrouter.ai/keys' });
+                }
+            }
+
+            function copySettings() {
+                const settingsTemplate = `{
+    "gitAutoCommit.enable": true,
+    "gitAutoCommit.branch": "main",
+    "gitAutoCommit.intervalMinutes": 10,
+    "gitAutoCommit.useAI": true,
+    "gitAutoCommit.groqApiKey": "YOUR_GROQ_KEY_HERE",
+    "gitAutoCommit.openrouterApiKey": "YOUR_OPENROUTER_KEY_HERE"
+}`;
+
+                navigator.clipboard.writeText(settingsTemplate).then(() => {
+                    if (typeof vscode !== 'undefined') {
+                        vscode.postMessage({ type: 'showInfo', message: 'Settings template copied to clipboard!' });
+                    }
+                });
+            }
+
+            function openSettingsJSON() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openSettingsJSON' });
+                }
+            }
+        </script>
+            function getGroqKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://console.groq.com/keys' });
+                }
+            }
+
+            function getOpenRouterKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://openrouter.ai/keys' });
+                }
+            }
+
+            function copySettings() {
+                const settingsTemplate = `{
+    "gitAutoCommit.enable": true,
+    "gitAutoCommit.branch": "main",
+    "gitAutoCommit.intervalMinutes": 10,
+    "gitAutoCommit.useAI": true,
+    "gitAutoCommit.groqApiKey": "YOUR_GROQ_KEY_HERE",
+    "gitAutoCommit.openrouterApiKey": "YOUR_OPENROUTER_KEY_HERE"
+}`;
+
+                navigator.clipboard.writeText(settingsTemplate).then(() => {
+                    if (typeof vscode !== 'undefined') {
+                        vscode.postMessage({ type: 'showInfo', message: 'Settings template copied to clipboard!' });
+                    }
+                });
+            }
+
+            function openSettingsJSON() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openSettingsJSON' });
+                }
+            }
+        </script>
+<body>
+    <div class="container">
+        <!-- Header with Logo -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🚀</div>
+                <div class="logo-text">
+                    <h1>Auto Push</h1>
+                    <p class="tagline">AI-Powered Git Automation</p>
+                </div>
+            </div>
+            <div class="status-badge" id="globalStatus">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </div>
+
+        <!-- Main Controls Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>⚙️ Automation Settings</h2>
+                <p>Configure your automatic Git workflow</p>
+            </div>
+
+            <div class="control-group">
+                <div class="control-item">
+                    <div class="control-info">
+                        <span class="control-label">Auto Commit</span>
+                        <span class="control-description">Automatically commit changes at regular intervals</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="toggle">
+                        <span class="slider">
+                            <span class="slider-text on">ON</span>
+                            <span class="slider-text off">OFF</span>
+                        </span>
+                    </label>
+                </div>
+
+                <div class="control-item">
+                    <div class="control-info">
+                        <span class="control-label">Commit Frequency</span>
+                        <span class="control-description">How often to auto-commit changes</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" id="interval" min="1" max="120" value="10" class="modern-input">
+                        <span class="input-suffix">minutes</span>
+                    </div>
+                </div>
+
+                <div class="control-item">
+                    <div class="control-info">
+                        <span class="control-label">AI Commit Messages</span>
+                        <span class="control-description">Generate smart commit messages using AI</span>
+                    </div>
+                    <label class="switch">
+                        <input type="checkbox" id="useAI">
+                        <span class="slider">
+                            <span class="slider-text on">AI</span>
+                            <span class="slider-text off">MANUAL</span>
+                        </span>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Actions Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>🎯 Quick Actions</h2>
+                <p>Instant Git operations with one click</p>
+            </div>
+
+            <div class="actions-grid">
+                <button id="manualCommit" class="action-btn ai-commit">
+                    <span class="btn-icon">🤖</span>
+                    <span class="btn-content">
+                        <span>
+                            <span class="btn-title">AI Commit & Push</span>
+                            <span class="btn-desc">Smart commit with AI message</span>
+                        </span>
+                        <span class="btn-badge ai-recommend">RECOMMENDED</span>
+
+                    </span>
+                </button>
+
+                <button id="quickCommit" class="action-btn quick-commit">
+                    <span class="btn-icon">⚡</span>
+                    <span class="btn-content">
+                        <span class="btn-title">Quick Commit</span>
+                        <span class="btn-desc">Fast commit with default message</span>
+                    </span>
+                </button>
+
+                <button id="pause1h" class="action-btn pause-btn">
+                    <span class="btn-icon">⏸️</span>
+                    <span class="btn-content">
+                        <span class="btn-title">Pause Auto</span>
+                        <span class="btn-desc">Stop auto-commit for 1 hour</span>
+                    </span>
+                </button>
+
+                <button id="resumeBtn" class="action-btn resume-btn">
+                    <span class="btn-icon">▶️</span>
+                    <span class="btn-content">
+                        <span class="btn-title">Resume Auto</span>
+                        <span class="btn-desc">Restart auto-commit feature</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Status Card -->
+        <div class="card">
+            <div class="card-header">
+                <h2>📊 Current Status</h2>
+                <p>Real-time extension status</p>
+            </div>
+
+            <div class="status-grid">
+                <div class="status-item">
+                    <div class="status-icon auto-commit-icon">🔄</div>
+                    <div class="status-info">
+                        <span class="status-name">Auto Commit</span>
+                        <span class="status-value" id="statusEnabled">Disabled</span>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-icon ai-icon">🧠</div>
+                    <div class="status-info">
+                        <span class="status-name">AI Messages</span>
+                        <span class="status-value" id="statusAI">Disabled</span>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-icon pause-icon">⏸️</div>
+                    <div class="status-info">
+                        <span class="status-name">Pause Status</span>
+                        <span class="status-value" id="statusPaused">Active</span>
+                    </div>
+                </div>
+
+                <div class="status-item">
+                    <div class="status-icon timer-icon">⏰</div>
+                    <div class="status-info">
+                        <span class="status-name">Next Commit</span>
+                        <span class="status-value" id="nextCommit">10:00 min</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Help & Guide Card -->
+        <div class="card"
+            style="background: linear-gradient(135deg, #2d2d2d 0%, #363636 100%); border-radius: 16px; padding: 24px; margin-bottom: 20px; border: 1px solid #404040; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);">
+            <div class="card-header" style="margin-bottom: 20px;">
+                <h2 style="font-size: 1.4em; margin-bottom: 8px; color: #fff;">📚 User Guide & Help</h2>
+                <p style="color: #888; font-size: 0.9em;">Learn how to use Auto Push effectively</p>
+            </div>
+
+            <div class="help-section" style="display: flex; flex-direction: column; gap: 20px;">
+                <!-- Quick Start Guide -->
+                <div class="help-item"
+                    style="padding: 16px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid #404040;">
+                    <h3 style="margin-bottom: 12px; color: #4CAF50; font-size: 1.1em;">🚀 Quick Start</h3>
+                    <p style="margin-bottom: 8px; line-height: 1.5;"><strong>Method 1 - AI Commit
+                            (Recommended):</strong></p>
+                    <ol style="margin: 8px 0; padding-left: 20px;">
+                        <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Get FREE API key from Groq or
+                            OpenRouter</li>
+                        <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Add key to VS Code settings (see
+                            below)</li>
+                        <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Make code changes</li>
+                        <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Click "AI Commit & Push" button
+                        </li>
+                        <li style="color: #ccc; font-size: 0.9em;">AI generates smart commit message & auto push</li>
+                    </ol>
+
+                    <p style="margin-bottom: 8px; line-height: 1.5;"><strong>Method 2 - Quick Commit:</strong></p>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li style="color: #ccc; font-size: 0.9em;">Click "Quick Commit" for instant commit with
+                            timestamp</li>
+                    </ul>
+
+                    <p style="margin-bottom: 8px; line-height: 1.5;"><strong>Method 3 - Auto Mode:</strong></p>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li style="color: #ccc; font-size: 0.9em;">Turn ON "Auto Commit" toggle</li>
+                        <li style="color: #ccc; font-size: 0.9em;">Set interval (default: 10 minutes)</li>
+                        <li style="color: #ccc; font-size: 0.9em;">Enable AI Messages if needed</li>
+                        <li style="color: #ccc; font-size: 0.9em;">Extension auto-commits at intervals</li>
+                    </ul>
+                </div>
+
+                <!-- API Setup Guide -->
+                <div class="help-item"
+                    style="padding: 16px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid #404040;">
+                    <h3 style="margin-bottom: 12px; color: #4CAF50; font-size: 1.1em;">🔑 API Setup Guide</h3>
+
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="color: #fff; margin-bottom: 8px; font-size: 1em;">⚡ Groq (Recommended)</h4>
+                        <ol style="margin: 8px 0; padding-left: 20px;">
+                            <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Visit: <a
+                                    href="https://console.groq.com"
+                                    style="color: #4CAF50; text-decoration: none;">console.groq.com</a></li>
+                            <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Sign up & create API key</li>
+                            <li style="color: #ccc; font-size: 0.9em;">Add to settings: <code
+                                    style="background: rgba(76, 175, 80, 0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #4CAF50;">gitAutoCommit.groqApiKey</code>
+                            </li>
+                        </ol>
+                        <button onclick="getGroqKey()"
+                            style="background: linear-gradient(135deg, #4CAF50, #45a049); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85em; margin-top: 5px;">
+                            Get Groq API Key
+                        </button>
+                    </div>
+
+                    <div>
+                        <h4 style="color: #fff; margin-bottom: 8px; font-size: 1em;">🌐 OpenRouter</h4>
+                        <ol style="margin: 8px 0; padding-left: 20px;">
+                            <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Visit: <a
+                                    href="https://openrouter.ai"
+                                    style="color: #4CAF50; text-decoration: none;">openrouter.ai</a></li>
+                            <li style="margin-bottom: 4px; color: #ccc; font-size: 0.9em;">Sign up & create API key</li>
+                            <li style="color: #ccc; font-size: 0.9em;">Add to settings: <code
+                                    style="background: rgba(76, 175, 80, 0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: #4CAF50;">gitAutoCommit.openrouterApiKey</code>
+                            </li>
+                        </ol>
+                        <button onclick="getOpenRouterKey()"
+                            style="background: linear-gradient(135deg, #667eea, #764ba2); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85em; margin-top: 5px;">
+                            Get OpenRouter Key
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Settings Configuration -->
+                <div class="help-item"
+                    style="padding: 16px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid #404040;">
+                    <h3 style="margin-bottom: 12px; color: #4CAF50; font-size: 1.1em;">⚙️ Settings Configuration</h3>
+                    <p style="margin-bottom: 10px; color: #ccc; font-size: 0.9em;">VS Code Settings → Search
+                        "gitAutoCommit":</p>
+
+                    <div
+                        style="background: #1e1e1e; padding: 12px; border-radius: 6px; border: 1px solid #444; margin-bottom: 10px;">
+                        <code style="color: #d4d4d4; font-family: monospace; font-size: 0.8em; line-height: 1.4;">
+{<br/>
+&nbsp;&nbsp;"gitAutoCommit.enable": true,<br/>
+&nbsp;&nbsp;"gitAutoCommit.branch": "main",<br/>
+&nbsp;&nbsp;"gitAutoCommit.intervalMinutes": 10,<br/>
+&nbsp;&nbsp;"gitAutoCommit.useAI": true,<br/>
+&nbsp;&nbsp;"gitAutoCommit.groqApiKey": "YOUR_GROQ_KEY",<br/>
+&nbsp;&nbsp;"gitAutoCommit.openrouterApiKey": "YOUR_OPENROUTER_KEY"<br/>
+}
+                </code>
+                    </div>
+
+                    <button onclick="copySettings()"
+                        style="background: linear-gradient(135deg, #2196F3, #1976D2); color: white; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85em; margin-right: 10px;">
+                        📋 Copy Settings Template
+                    </button>
+                    <button onclick="openSettingsJSON()"
+                        style="background: rgba(255, 255, 255, 0.1); color: white; border: 1px solid #444; padding: 8px 16px; border-radius: 6px; cursor: pointer; font-size: 0.85em;">
+                        🛠 Open Settings JSON
+                    </button>
+                </div>
+
+                <!-- Common Questions -->
+                <div class="help-item"
+                    style="padding: 16px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid #404040;">
+                    <h3 style="margin-bottom: 12px; color: #4CAF50; font-size: 1.1em;">❓ Common Questions</h3>
+
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin-bottom: 4px; color: #fff; font-size: 0.9em;"><strong>Q: No Git
+                                repository?</strong></p>
+                        <p style="color: #ccc; font-size: 0.85em; margin-left: 10px;">A: Extension auto-detects and
+                            initializes git automatically</p>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin-bottom: 4px; color: #fff; font-size: 0.9em;"><strong>Q: Don't want AI
+                                features?</strong></p>
+                        <p style="color: #ccc; font-size: 0.85em; margin-left: 10px;">A: Turn OFF "AI Commit Messages"
+                            toggle or use Quick Commit</p>
+                    </div>
+
+                    <div style="margin-bottom: 10px;">
+                        <p style="margin-bottom: 4px; color: #fff; font-size: 0.9em;"><strong>Q: How to stop auto
+                                commit?</strong></p>
+                        <p style="color: #ccc; font-size: 0.85em; margin-left: 10px;">A: Turn OFF "Auto Commit" toggle
+                            or use "Pause Auto" button</p>
+                    </div>
+
+                    <div>
+                        <p style="margin-bottom: 4px; color: #fff; font-size: 0.9em;"><strong>Q: API key not
+                                working?</strong></p>
+                        <p style="color: #ccc; font-size: 0.85em; margin-left: 10px;">A: Get new free key from Groq - it
+                            has the most generous free tier</p>
+                    </div>
+                </div>
+
+                <!-- Pro Tips -->
+                <div class="help-item"
+                    style="padding: 16px; background: rgba(255, 255, 255, 0.03); border-radius: 8px; border: 1px solid #404040;">
+                    <h3 style="margin-bottom: 12px; color: #4CAF50; font-size: 1.1em;">🎉 Pro Tips</h3>
+                    <ul style="margin: 8px 0; padding-left: 20px;">
+                        <li style="margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Use <strong
+                                style="color: #4CAF50;">AI Commit</strong> for professional, meaningful commit messages
+                        </li>
+                        <li style="margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Keep <strong
+                                style="color: #4CAF50;">Auto Mode ON</strong> for hands-free workflow</li>
+                        <li style="margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Use <strong
+                                style="color: #4CAF50;">Pause 1h</strong> during meetings or breaks</li>
+                        <li style="margin-bottom: 6px; color: #ccc; font-size: 0.9em;">Get <strong
+                                style="color: #4CAF50;">Groq API key</strong> for fastest performance (10,000+ free
+                            requests/month)</li>
+                        <li style="color: #ccc; font-size: 0.9em;">Monitor real-time status in the <strong
+                                style="color: #4CAF50;">Status Panel</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            function getGroqKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://console.groq.com/keys' });
+                }
+            }
+
+            function getOpenRouterKey() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openLink', url: 'https://openrouter.ai/keys' });
+                }
+            }
+
+            function copySettings() {
+                const settingsTemplate = `{
+    "gitAutoCommit.enable": true,
+    "gitAutoCommit.branch": "main",
+    "gitAutoCommit.intervalMinutes": 10,
+    "gitAutoCommit.useAI": true,
+    "gitAutoCommit.groqApiKey": "YOUR_GROQ_KEY_HERE",
+    "gitAutoCommit.openrouterApiKey": "YOUR_OPENROUTER_KEY_HERE"
+}`;
+
+                navigator.clipboard.writeText(settingsTemplate).then(() => {
+                    if (typeof vscode !== 'undefined') {
+                        vscode.postMessage({ type: 'showInfo', message: 'Settings template copied to clipboard!' });
+                    }
+                });
+            }
+
+            function openSettingsJSON() {
+                if (typeof vscode !== 'undefined') {
+                    vscode.postMessage({ type: 'openSettingsJSON' });
+                }
+            }
+        </script>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-text">
+                    <span class="footer-title">Auto Push</span>
+                    <span class="footer-subtitle">Made with ❤️ by Mohebulla Miazi Shafi</span>
+                </div>
+                <div class="footer-links">
+                    <a href="https://www.linkedin.com/in/shafimiazi" target="_blank" class="footer-link">
+                        <span class="link-icon">💼</span> LinkedIn
+                    </a>
+                    <a href="https://www.facebook.com/shafimiazi1" target="_blank" class="footer-link">
+                        <span class="link-icon">👥</span> Facebook
+                    </a>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script src="${scriptUri}"></script>
+</body>
+
+</html>

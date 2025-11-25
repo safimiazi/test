@@ -68,7 +68,7 @@
       };
 
       try {
-        const response = await fetch(`http://localhost:3001/api/podcast/${bookId}/stream-podcast`, {
+        const response = await fetch(`http://localhost:3001/podcast/${bookId}/stream-podcast`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
@@ -79,7 +79,7 @@
         const audio = new Audio(URL.createObjectURL(await response.blob()));
         audio.play();
 
-        status.textContent = "Playing... (চলছে)";
+        status.textContent = "Playing...";
         
         audio.onended = () => {
           status.textContent = "Finished!";

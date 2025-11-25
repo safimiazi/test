@@ -1,0 +1,55 @@
+ <script>
+    const playBtn = document.getElementById('playBtn');
+    const status = document.getElementById('status');
+
+    playBtn.onclick = async () => {
+      const bookId = document.getElementById('bookId').value.trim();
+      if (!bookId) return alert("Book ID দাও!");
+
+      status.textContent = "Starting podcast...";
+      playBtn.disabled = true;
+
+      const payload = {
+        voices: [
+
+          { character: "Shafi", voiceId: "ar-XA-Chirp3-HD-Iapetus" },
+          { character: "Adnan", voiceId: "ar-XA-Standard-D" }
+        ],
+        tone: document.getElementById('tone').value
+      };
+
+      try {
+        const response = await fetch(`http://localhost:3001/podcast/${bookId}/stream-podcast`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) throw new Error("Failed: " + response.status);
+
+        const audio = new Audio(URL.createObjectURL(await response.blob()));
+        audio.play();
+
+        status.textContent = "Playing...";
+        
+        audio.onended = () => {
+          status.textContent = "Finished!";
+          playBtn.disabled = false;
+        };
+
+        function syHello () {
+          console.log("Hello!");
+        }
+
+        audio.onerror = () => {
+          status.textContent = "Error playing audio";
+          playBtn.disabled = false;
+        };
+
+      } catch (err) {
+        console.error(err);
+        status.textContent = "Error: " + err.message;
+        playBtn.disabled = false;
+      }
+    };
+  </script>

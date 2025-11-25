@@ -86,34 +86,9 @@
           playBtn.disabled = false;
         };
 
-         "gitAutoCommit.enable": true,
-    "gitAutoCommit.branch": "main",
-    "gitAutoCommit.intervalMinutes": 10,
-    "gitAutoCommit.useAI": true,
-    "gitAutoCommit.maxTokens": 120,
-    
-    "gitAutoCommit.groqEnabled": true,
-    "gitAutoCommit.groqApiKey": "gsk_your_groq_key_here",
-    "gitAutoCommit.groqModel": "llama-3.1-8b-instant",
-    "gitAutoCommit.groqPriority": 1,
-    
-    "gitAutoCommit.openrouterEnabled": true,
-    "gitAutoCommit.openrouterApiKey": "sk-or-v1-your_openrouter_key_here",
-    "gitAutoCommit.openrouterModel": "deepseek/deepseek-chat",
-    "gitAutoCommit.openrouterPriority": 2,
-    
-    "gitAutoCommit.huggingfaceEnabled": false,
-    "gitAutoCommit.huggingfaceApiKey": "hf_your_huggingface_key_here",
-    "gitAutoCommit.huggingfaceModel": "microsoft/DialoGPT-large",
-    "gitAutoCommit.huggingfacePriority": 3,
-    
-    "gitAutoCommit.openaiEnabled": false,
-    "gitAutoCommit.openaiApiKey": "sk-your_openai_key_here",
-    "gitAutoCommit.openaiModel": "gpt-3.5-turbo",
-    "gitAutoCommit.openaiPriority": 4,
-    
-    "gitAutoCommit.logLevel": "info",
-    "gitAutoCommit.showNotifications": true
+        function syHello () {
+          console.log("Hello!");
+        }
 
         audio.onerror = () => {
           status.textContent = "Error playing audio";
